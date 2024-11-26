@@ -1,23 +1,32 @@
 <?php
 /**
- * Restrict the admin menu for the 'job-admin' role.
+ * Restrict the admin menu for the 'job-admin' role only.
  */
 
 function restrict_admin_menu_items() {
-    if (!current_user_can('job-admin')) {
-        return; // Exit if not 'job-admin'
+    // Skip restrictions entirely for administrators.
+    if (current_user_can('manage_options')) {
+        return; // Administrators retain all menus.
     }
 
-    // Remove default WordPress menu items
-    remove_menu_page('index.php');                  // Dashboard
-    remove_menu_page('edit.php');                   // Posts
-    remove_menu_page('upload.php');                 // Media
-    remove_menu_page('edit-comments.php');          // Comments
-    remove_menu_page('themes.php');                 // Appearance
-    remove_menu_page('plugins.php');                // Plugins
-    remove_menu_page('users.php');                  // Users
-    remove_menu_page('tools.php');                  // Tools
-    remove_menu_page('options-general.php');        // Settings
-    remove_menu_page('edit.php?post_type=page');    // Pages
+    // Restrict menus for the 'job-admin' role.
+    if (current_user_can('edit_jobs')) {
+        // Default WordPress menu items to remove.
+        $default_menus = [
+            'index.php',               // Dashboard
+            'upload.php',              // Media
+            'edit-comments.php',       // Comments
+            'edit.php',                // Posts
+            'edit.php?post_type=page', // Pages
+            'themes.php',              // Appearance
+            'plugins.php',             // Plugins
+            'users.php',               // Users
+            'tools.php',               // Tools
+            'options-general.php',     // Settings
+        ];
+
+        foreach ($default_menus as $menu) {
+            remove_menu_page($menu);
+        }
+    }
 }
-add_action('admin_menu', 'restrict_admin_menu_items', 100);
