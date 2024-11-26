@@ -1,30 +1,26 @@
 <?php
 /**
- * Adds a meta box for the 'Laborers' post type.
+ * Add and manage meta box fields for "Laborers" post type.
  */
 
-// Exit if accessed directly.
-if (!defined('ABSPATH')) {
-    exit;
+function add_laborer_meta_box() {
+    add_meta_box(
+        'laborer_meta',        // ID of the meta box
+        'Laborer Details',     // Title
+        'render_laborer_meta_box', // Callback function
+        'laborer',             // Post type
+        'normal',              // Context
+        'high'                 // Priority
+    );
 }
+add_action('add_meta_boxes', 'add_laborer_meta_box');
 
-// Add meta box for Laborers.
-function intranet_core_add_laborer_meta_box() {
-    add_meta_box('laborer_details', 'Laborer Details', 'intranet_core_render_laborer_meta_box', 'laborer', 'normal', 'high');
-}
-add_action('add_meta_boxes', 'intranet_core_add_laborer_meta_box');
-
-// Render the meta box.
-function intranet_core_render_laborer_meta_box($post) {
-    $phone = get_post_meta($post->ID, 'laborer_phone', true);
-    echo '<label for="laborer_phone">Phone:</label>';
-    echo '<input type="text" id="laborer_phone" name="laborer_phone" value="' . esc_attr($phone) . '" />';
-}
-
-// Save meta box data.
-function intranet_core_save_laborer_meta_box($post_id) {
-    if (array_key_exists('laborer_phone', $_POST)) {
-        update_post_meta($post_id, 'laborer_phone', sanitize_text_field($_POST['laborer_phone']));
-    }
-}
-add_action('save_post', 'intranet_core_save_laborer_meta_box');
+function render_laborer_meta_box($post) {
+    // Retrieve existing values
+    $first_name = get_post_meta($post->ID, '_laborer_first_name', true);
+    $last_name = get_post_meta($post->ID, '_laborer_last_name', true);
+    $locale = get_post_meta($post->ID, '_laborer_locale', true);
+    $hourly_wage = get_post_meta($post->ID, '_laborer_hourly_wage', true);
+    $emergency_contact = get_post_meta($post->ID, '_laborer_emergency_contact', true);
+    $address = get_post_meta($post->ID, '_laborer_address', true);
+    $phone_number = get_post_meta($pos

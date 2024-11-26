@@ -39,8 +39,7 @@ function register_laborers_post_type() {
         'map_meta_cap'       => true,
         'supports'           => ['title', 'editor', 'thumbnail'],
         'show_in_menu'       => true,
+        'menu_icon'          => 'dashicons-groups',
     ];
 
     register_post_type('laborer', $args);
-}
-add_action('init', 'register_laborers_post_type');

@@ -40,6 +40,7 @@ function register_jobs_post_type() {
         'map_meta_cap'       => true,
         'supports'           => ['title', 'editor', 'thumbnail'],
         'show_in_menu'       => true,
+        'menu_icon'          => 'dashicons-hammer',
     ];
 
     register_post_type('job', $args);
