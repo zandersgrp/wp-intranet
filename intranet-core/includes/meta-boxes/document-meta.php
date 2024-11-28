@@ -1,6 +1,6 @@
 <?php
 /**
- * Add meta box for "Documents" custom post type.
+ * Add meta box for "Documents" custom post type with a media uploader.
  */
 
 function add_document_meta_box() {
@@ -24,8 +24,9 @@ function render_document_meta_box($post) {
 
     // File Upload
     echo '<label for="document_file_url">Upload File:</label>';
-    echo '<input type="text" id="document_file_url" name="document_file_url" value="' . esc_attr($file_url) . '" style="width:100%;" />';
-    echo '<button id="upload_button" class="button">Upload</button>';
+    echo '<input type="hidden" id="document_file_url" name="document_file_url" value="' . esc_attr($file_url) . '" />';
+    echo '<button id="upload_button" class="button">Upload File</button>';
+    echo '<div id="uploaded_file_preview">' . (!empty($file_url) ? '<a href="' . esc_url($file_url) . '" target="_blank">View File</a>' : '') . '</div>';
 }
 
 function save_document_meta_box($post_id) {

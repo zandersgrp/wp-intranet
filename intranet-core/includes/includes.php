@@ -32,4 +32,18 @@ require_once INTRANET_CORE_PATH . 'includes/ajax/search-posts.php'; // AJAX sear
 function intranet_core_enqueue_scripts($hook) {
     global $post_type;
 
-    // Loa
+    // Load for the job post type.
+    if ('post.php' === $hook || 'post-new.php' === $hook) {
+        if ($post_type === 'job') {
+            wp_enqueue_script('job-search', INTRANET_CORE_URL . 'assets/js/job-search.js', ['jquery'], null, true);
+            wp_localize_script('job-search', 'ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+        }
+
+        // Load for the document post type.
+        if ($post_type === 'document') {
+            wp_enqueue_script('document-meta', INTRANET_CORE_URL . 'assets/js/document-meta.js', ['jquery', 'wp-mediaelement'], null, true);
+            wp_enqueue_media(); // Required for the media uploader.
+        }
+    }
+}
+add_action('admin_enqueue_scripts', 'intranet_core_enqueue_scripts');

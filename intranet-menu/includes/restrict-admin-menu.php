@@ -30,3 +30,4 @@ function restrict_admin_menu_items() {
         }
     }
 }
+add_action('admin_menu', 'restrict_admin_menu_items', 100);

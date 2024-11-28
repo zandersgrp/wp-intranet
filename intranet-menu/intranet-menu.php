@@ -1,15 +1,16 @@
 <?php
 /**
  * Plugin Name: Intranet Menu
- * Description: Menu functionality for the CPC intranet system.
+ * Description: Plugin to manage menu restrictions for the intranet system.
  * Version: 1.0
- * Author: Zanders Group 
+ * Author: Your Name
  */
 
-// Exit if accessed directly.
-if (!defined('ABSPATH')) {
-    exit;
-}
+// Log that the plugin is loaded.
+error_log('Intranet Menu plugin loaded.');
 
-// Include core functionality.
-require_once INTRANET_CORE_PATH . 'includes/includes.php';
+// Include functionality for restricting menu items.
+require_once __DIR__ . '/includes/restrict-admin-menu.php';
+
+// Include functionality for unrestricting menu items for admins.
+require_once plugin_dir_path(__FILE__) . '/includes/admin-override.php';

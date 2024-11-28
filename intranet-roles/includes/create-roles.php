@@ -1,26 +1,17 @@
 <?php
 /**
- * Create and manage custom roles like 'job-admin'.
+ * Create and manage custom roles like 'job-admin' and assign capabilities.
  */
 
-// Debugging role registration.
-add_action('init', function () {
-    $role = get_role('job-admin');
-    if ($role) {
-        error_log('Job Admin Role exists: ' . print_r($role, true));
-    } else {
-        error_log('Job Admin Role does not exist.');
-    }
-});
-
 function intranet_create_roles() {
-    // Debug role creation execution.
     error_log('intranet_create_roles function triggered.');
 
-    // Add the 'job-admin' role if it doesn't exist.
+    // Add 'job-admin' role if it doesn't exist
     if (!get_role('job-admin')) {
         $result = add_role('job-admin', 'Job Admin', [
-            'read' => true, // Basic read access.
+            'read'          => true,
+            'edit_posts'    => true,
+            'upload_files'  => true,
         ]);
 
         if ($result) {
@@ -28,33 +19,37 @@ function intranet_create_roles() {
         } else {
             error_log('Failed to add Job Admin Role.');
         }
+    } else {
+        error_log('Job Admin Role already exists.');
     }
 
-    // Define and assign capabilities for 'job-admin'.
-    $role = get_role('job-admin');
-    if ($role) {
-        error_log('Assigning capabilities to Job Admin Role.');
+    // Add custom post type capabilities to roles
+    $roles = ['job-admin', 'administrator']; // Roles to update
+    $custom_post_types = ['job', 'material', 'laborer', 'vendor', 'task', 'document'];
 
-        // General admin permissions.
-        $role->add_cap('read');           // Basic read access.
-        $role->add_cap('edit_posts');    // Required to access admin.
-        $role->add_cap('upload_files');  // Allow media uploads.
+    foreach ($roles as $role_name) {
+        $role = get_role($role_name);
 
-        // Capabilities for custom post types.
-        $custom_post_types = ['material', 'job', 'laborer', 'vendor', 'task'];
-        foreach ($custom_post_types as $cpt) {
-            $role->add_cap("edit_{$cpt}");
-            $role->add_cap("read_{$cpt}");
-            $role->add_cap("delete_{$cpt}");
-            $role->add_cap("edit_{$cpt}s");
-            $role->add_cap("edit_others_{$cpt}s");
-            $role->add_cap("publish_{$cpt}s");
-            $role->add_cap("read_private_{$cpt}s");
+        if ($role) {
+            foreach ($custom_post_types as $cpt) {
+                $role->add_cap("edit_{$cpt}");
+                $role->add_cap("read_{$cpt}");
+                $role->add_cap("delete_{$cpt}");
+                $role->add_cap("edit_{$cpt}s");
+                $role->add_cap("edit_others_{$cpt}s");
+                $role->add_cap("publish_{$cpt}s");
+                $role->add_cap("read_private_{$cpt}s");
+                $role->add_cap("delete_others_{$cpt}s");
+                $role->add_cap("delete_private_{$cpt}s");
+                $role->add_cap("edit_private_{$cpt}s");
+                $role->add_cap("edit_published_{$cpt}s");
+                $role->add_cap("delete_published_{$cpt}s");
+            }
+
+            error_log("Capabilities successfully added to {$role_name} Role.");
+        } else {
+            error_log("Failed to retrieve {$role_name} Role.");
         }
-
-        error_log('Capabilities successfully assigned to Job Admin Role.');
-    } else {
-        error_log('Failed to retrieve Job Admin Role.');
     }
 }
 add_action('init', 'intranet_create_roles');

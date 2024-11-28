@@ -38,7 +38,7 @@ function register_jobs_post_type() {
             'delete_published_posts'=> 'delete_published_jobs',
         ],
         'map_meta_cap'       => true,
-        'supports'           => ['title', 'editor', 'thumbnail'],
+        'supports'           => ['title'],
         'show_in_menu'       => true,
         'menu_icon'          => 'dashicons-hammer',
     ];
