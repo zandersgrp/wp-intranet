@@ -16,6 +16,8 @@ require_once INTRANET_CORE_PATH . 'includes/post-types/materials.php'; // Handle
 require_once INTRANET_CORE_PATH . 'includes/post-types/jobs.php';     // Handles the 'Jobs' post type.
 require_once INTRANET_CORE_PATH . 'includes/post-types/tasks.php';    // Handles the 'Tasks' post type.
 require_once INTRANET_CORE_PATH . 'includes/post-types/documents.php'; // Load the "Documents" post type.
+require_once INTRANET_CORE_PATH . 'includes/post-types/orders.php'; // Handles the 'Orders' post type.
+
 
 // Load meta boxes.
 require_once INTRANET_CORE_PATH . 'includes/meta-boxes/laborer-meta.php'; // Meta box for Laborers.
@@ -24,6 +26,7 @@ require_once INTRANET_CORE_PATH . 'includes/meta-boxes/material-meta.php'; // Me
 require_once INTRANET_CORE_PATH . 'includes/meta-boxes/job-meta.php';     // Meta box for Jobs.
 require_once INTRANET_CORE_PATH . 'includes/meta-boxes/document-meta.php'; // Load the "Documents" meta box.
 require_once INTRANET_CORE_PATH . 'includes/meta-boxes/auto-title.php'; // Load the Auto Title file.
+require_once INTRANET_CORE_PATH . 'includes/meta-boxes/order-meta.php'; // Meta box for 'Orders'.
 
 // Load AJAX handlers.
 require_once INTRANET_CORE_PATH . 'includes/ajax/search-posts.php'; // AJAX search handler.

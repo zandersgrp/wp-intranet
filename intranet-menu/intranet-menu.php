@@ -7,7 +7,7 @@
  */
 
 // Log that the plugin is loaded.
-error_log('Intranet Menu plugin loaded.');
+//error_log('Intranet Menu plugin loaded.');
 
 // Include functionality for restricting menu items.
 require_once __DIR__ . '/includes/restrict-admin-menu.php';

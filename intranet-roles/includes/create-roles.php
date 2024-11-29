@@ -14,18 +14,19 @@ function intranet_create_roles() {
             'upload_files'  => true,
         ]);
 
-        if ($result) {
+        /**if ($result) {
             error_log('Job Admin Role successfully added.');
         } else {
             error_log('Failed to add Job Admin Role.');
         }
     } else {
         error_log('Job Admin Role already exists.');
-    }
+    }*/
+    } // <-- remove this when activating logging!
 
     // Add custom post type capabilities to roles
     $roles = ['job-admin', 'administrator']; // Roles to update
-    $custom_post_types = ['job', 'material', 'laborer', 'vendor', 'task', 'document'];
+    $custom_post_types = ['job', 'material', 'laborer', 'vendor', 'task', 'document', 'order'];
 
     foreach ($roles as $role_name) {
         $role = get_role($role_name);
@@ -46,9 +47,9 @@ function intranet_create_roles() {
                 $role->add_cap("delete_published_{$cpt}s");
             }
 
-            error_log("Capabilities successfully added to {$role_name} Role.");
+           // error_log("Capabilities successfully added to {$role_name} Role.");
         } else {
-            error_log("Failed to retrieve {$role_name} Role.");
+           // error_log("Failed to retrieve {$role_name} Role.");
         }
     }
 }
